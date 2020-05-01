@@ -190,17 +190,17 @@ else
 	self.damage	= self.flood_damage
 end
 
-self.flood_damage			= self.damage
+self.flood_damage		= self.damage
 self.account_balance 		= self.start_savings
-self.insurance_max 			= self.insurance_cap
-self.plppInsCost			= (self.plppCost/PLPP_LIFETIME) + self.insuranceCost
+self.insurance_max 		= self.insurance_cap
+self.plppInsCost		= (self.plppCost/PLPP_LIFETIME) + self.insuranceCost
 self.belief_ins_plpp_works	= (self.belief_plpp_works*self.belief_ins_works)
-self.insExcessCost 			= ((FLOODS_PROB*0.1)*(self.insuranceCost)) 
-self.rp_exp 				= self.flood_damage
+self.insExcessCost 		= ((FLOODS_PROB*0.1)*(self.insuranceCost)) 
+self.rp_exp 			= self.flood_damage
 -----------------------------------------------------------
 self.insurance_count		= self.purchaseInsuranceCap + self.purchaseInsurance
 -----------------------------------------------------------
-self.rp_savings				= self.account_balance
+self.rp_savings			= self.account_balance
 
 
 ------------------------------------------------------------------

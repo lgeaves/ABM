@@ -2,115 +2,115 @@
 ----Universal Variables
 ------------------------------------------------------------------
 
-ROUNDS					= 30
-FLOOD_PROB				= 0.01
+ROUNDS			= 30 		-- number of rounds simulation is run
+FLOOD_PROB		= 0.01		-- probability of flooding
 
-FLOODS_PROB				= 0.01  	-- probability of the flood occurring in any one year in the general area, not localised to household
-FLOODS_PROB_INCREMENT	= (0.01 - FLOODS_PROB)/ROUNDS
+FLOODS_PROB		= 0.01  	-- probability of the flood occurring in any one year in the general area, not localised to household
+FLOODS_PROB_INCREMENT	= (0.01 - FLOODS_PROB)/ROUNDS -- increase of probability of flooding, due to climate change etc.
 
-POTENTIAL_DAMAGE		= -30000
+POTENTIAL_DAMAGE	= -30000	-- average cost of damge for a household during a flood (referenced in thesis)
 
-POLICY_LENGTH			= 25
-TRANSITION_LENGTH 		= 10
+POLICY_LENGTH		= 25		-- duration of policy instrucment subsidising flood insurance
+TRANSITION_LENGTH 	= 10		-- duration that policy transitions to risk reflective pricing
 
-PLPP_COST				= -4700
-PLPP_LIFETIME			= 5
+PLPP_COST		= -4700		-- cheapest cost of property level protection
+PLPP_LIFETIME		= 5		-- average lifetime of property level protection
 
-NOTHING_COST			= 0
+NOTHING_COST		= 0		-- the cost of doing nothing!
 
-WAVE 					= 2.25 --loss aversion
-FISH					= 0.88 --
-PROB_W_GAINS			= 0.61
-PROB_W_LOSS				= 0.69
+WAVE 			= 2.25 		--loss aversion
+FISH			= 0.88 		--
+PROB_W_GAINS		= 0.61		-- probability weighting gains
+PROB_W_LOSS		= 0.69		-- probability weighting losses
 
-simulationTime 			= 0
+simulationTime 		= 0
 
 ------------------------------------------------------------------
 ----Agent Variables
 ------------------------------------------------------------------
 Householder = Agent{
 
-memory					= {},
-insmemory				= {},
+memory				= {},
+insmemory			= {},
 simulation_time			= simulationTime,
-hh_bracket				= 0,
+hh_bracket			= 0,
 start_savings			= 0,
 insurance_cap			= 0,
 insurance_max			= 0,
 account_balance			= 0,
-damage					= 0,
+damage				= 0,
 flood_damage			= 0,
 
 purchaseInsurance		= 0,
 purchaseNothing			= 0,
-purchaseInsuranceCap	= 0,
+purchaseInsuranceCap		= 0,
 actual_flood_prob		= FLOODS_PROB, 
 purchasePlpp			= 0,
 
-belief_ff 				= 1, -- need calc
+belief_ff 			= 1, -- need calc
 belief_ins_works		= 1, -- in memory later
 belief_plpp_works		= 0.87, -- in memory later
-belief_ins_plpp_works 	= 0.95,
-belief_nothing_works	= 0,
+belief_ins_plpp_works 		= 0.95,
+belief_nothing_works		= 0,
 
 insuranceCost			= 0,
-nothCost				= NOTHING_COST,
-plppCost 				= PLPP_COST,
-plppInsCost				= 0,
+nothCost			= NOTHING_COST,
+plppCost 			= PLPP_COST,
+plppInsCost			= 0,
 insExcessCost			= 0,
 
-believed_emv_plppins	= 0,
+believed_emv_plppins		= 0,
 believed_emv_plpp		= 0,
 believed_emv_ins		= 0,
 believed_emv_noth		= 0,
-belief_ff				= 0, -- you've got two of these! Why??????
+belief_ff			= 0, 
 
 floodAction 			= 0,
 
-rp						= 0,
-rp_exp					= 0,
-average_ins				= 0,
+rp				= 0,
+rp_exp				= 0,
+average_ins			= 0,
 
 
-pt_ins					= 0,
-pt_noth					= 0,
+pt_ins				= 0,
+pt_noth				= 0,
 
-insExpenses				= 0,
-countFlood				= 0,
+insExpenses			= 0,
+countFlood			= 0,
 
 rp_exp_count			= 0,
 rp_savings_count		= 0,
 rp_ins_count			= 0,
 insurance_count			= 0,
 
-pt_ins_op1 				= 0,
-pt_ins_op2 				= 0,
+pt_ins_op1 			= 0,
+pt_ins_op2 			= 0,
 		
 pt_noth_op1 			= 0,
 pt_noth_op2 			= 0,
-pt_ins_op2i				= 0,
+pt_ins_op2i			= 0,
 pt_noth_op2i			= 0,
 
-pt_plpp_op1				= 0,
+pt_plpp_op1			= 0,
 pt_plpp_op2i			= 0,
-pt_plpp_op2				= 0,
+pt_plpp_op2			= 0,
 pt_plppins_op1			= 0,
 pt_plppins_op2i			= 0,
 pt_plppins_op2			= 0,
 
-pt_plpp					= 0,
-pt_plppins				= 0,
+pt_plpp				= 0,
+pt_plppins			= 0,
 
-p_buy_ins_t				= 0,
+p_buy_ins_t			= 0,
 p_buy_ins_rr			= 0,
 p_buy_ins_cap			= 0,
-p_buy_noth				= 0,
-p_buy_plpp				= 0,
-p_rp_ins				= 0,
-p_rp_exp				= 0,
-p_rp_sav				= 0,
+p_buy_noth			= 0,
+p_buy_plpp			= 0,
+p_rp_ins			= 0,
+p_rp_exp			= 0,
+p_rp_sav			= 0,
 
-avInsCost 				= 0,
+avInsCost 			= 0,
 
 
 execute = function(self)
@@ -195,7 +195,7 @@ self.account_balance 		= self.start_savings
 self.insurance_max 			= self.insurance_cap
 self.plppInsCost			= (self.plppCost/PLPP_LIFETIME) + self.insuranceCost
 self.belief_ins_plpp_works	= (self.belief_plpp_works*self.belief_ins_works)
-self.insExcessCost 			= ((FLOODS_PROB*0.1)*(self.insuranceCost)) --((FLOODS_PROB*0.1)*(self.insuranceCost))
+self.insExcessCost 			= ((FLOODS_PROB*0.1)*(self.insuranceCost)) 
 self.rp_exp 				= self.flood_damage
 -----------------------------------------------------------
 self.insurance_count		= self.purchaseInsuranceCap + self.purchaseInsurance
@@ -245,7 +245,7 @@ end
 if (self.countFlood >= (simulationTime / 3)) then -- needs to be total damages, perhaps; not number of floods
 	self.rp = self.rp_exp
 else
-	if (self.insurance_count >= simulationTime / 3) then -- here I am defining what frequency of purchase makes purchasing insurance normal	
+	if (self.insurance_count >= simulationTime / 3) then -- here I am defining what frequency of purchase makes purchasing insurance normal. It's arbitrary but it's a prototype.
 		self.rp = self.rp_ins
 		--print ("true")
 	else
@@ -537,7 +537,7 @@ end -- end of main function
 householders = Society{instance = Householder, quantity = 5000}
 
 
-logFile = io.open("c:\\Users\\Linda\\Model_pt_281215_redo.csv", "w+") -- This is where my log file gets saved
+logFile = io.open("c:\\Users\\Linda\\Model_pt_281215_redo.csv", "w+") 
 --logFile:write("time\thh\tcap\trr\tnoth\tplpp\n")
 logFile:write("time\tins\texp\tsavings\n")
 
